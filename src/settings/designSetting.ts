@@ -1,4 +1,5 @@
 import { ThemeEnum } from '../enums/appEnum';
+// 用于预设一些颜色数组
 
 export const prefixCls = 'vben';
 

@@ -29,6 +29,6 @@ const permission: AppRouteModule = {
       component: () => import('/@/views/form-design/examples/baseForm.vue'),
     },
   ],
-};
+} as AppRouteModule;
 
 export default permission;

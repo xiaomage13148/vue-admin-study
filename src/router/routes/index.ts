@@ -27,7 +27,7 @@ export const RootRoute: AppRouteRecordRaw = {
   meta: {
     title: 'Root',
   },
-};
+} as AppRouteRecordRaw;
 
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
@@ -36,7 +36,7 @@ export const LoginRoute: AppRouteRecordRaw = {
   meta: {
     title: t('routes.basic.login'),
   },
-};
+} as AppRouteRecordRaw;
 
 // Basic routing without permission
 // 未经许可的基本路由

@@ -29,7 +29,7 @@ export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
       },
     },
   ],
-};
+} as AppRouteRecordRaw;
 
 export const REDIRECT_ROUTE: AppRouteRecordRaw = {
   path: '/redirect',
@@ -51,7 +51,7 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
       },
     },
   ],
-};
+} as AppRouteRecordRaw;
 
 export const ERROR_LOG_ROUTE: AppRouteRecordRaw = {
   path: '/error-log',
@@ -75,4 +75,4 @@ export const ERROR_LOG_ROUTE: AppRouteRecordRaw = {
       },
     },
   ],
-};
+} as AppRouteRecordRaw;

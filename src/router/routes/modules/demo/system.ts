@@ -73,6 +73,6 @@ const system: AppRouteModule = {
       component: () => import('/@/views/demo/system/password/index.vue'),
     },
   ],
-};
+} as AppRouteModule;
 
 export default system;

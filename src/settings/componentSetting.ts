@@ -1,5 +1,6 @@
 // Used to configure the general configuration of some components without modifying the components
 
+// 组件默认参数配置
 import type { SorterResult } from '../components/Table';
 
 export default {

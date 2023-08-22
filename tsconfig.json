@@ -10,7 +10,8 @@
       "/#/*": ["types/*"],
       "@/*": ["src/*"],
       "#/*": ["types/*"]
-    }
+    } ,
+    "strict": false
   },
   "include": [
     "tests/**/*.ts",

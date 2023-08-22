@@ -26,6 +26,6 @@ const about: AppRouteModule = {
       },
     },
   ],
-};
+} as AppRouteModule;
 
 export default about;

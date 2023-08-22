@@ -32,6 +32,6 @@ const dashboard: AppRouteModule = {
       },
     },
   ],
-};
+} as AppRouteModule;
 
 export default dashboard;

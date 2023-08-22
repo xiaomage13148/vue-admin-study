@@ -1,6 +1,7 @@
 <template>
   <RouterView>
     <template #default="{ Component, route }">
+      <!--  过渡效果渲染组件    -->
       <transition
         :name="
           getTransitionName({
