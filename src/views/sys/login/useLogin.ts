@@ -23,6 +23,7 @@ export function useLoginState() {
 
   const getLoginState = computed(() => currentState.value);
 
+  // 返回登录
   function handleBackLogin() {
     setLoginState(LoginStateEnum.LOGIN);
   }
@@ -33,12 +34,14 @@ export function useLoginState() {
 export function useFormValid<T extends Object = any>(formRef: Ref<FormInstance>) {
   const validate = computed(() => {
     const form = unref(formRef);
+    // 返回表单的 validate 函数，如果没有就返回一个空函数
     return form?.validate ?? ((_nameList?: NamePath) => Promise.resolve());
   });
 
   async function validForm() {
     const form = unref(formRef);
     if (!form) return;
+    // 调用表单的 validate 函数并等待验证结果
     const data = await form.validate();
     return data as T;
   }

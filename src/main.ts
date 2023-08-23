@@ -23,6 +23,7 @@ async function bootstrap() {
 
   // Configure store
   // 配置 store
+  // 配置vuex
   setupStore(app);
 
   // Initialize internal system configuration

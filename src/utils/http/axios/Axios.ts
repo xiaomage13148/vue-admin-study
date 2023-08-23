@@ -196,9 +196,17 @@ export class VAxios {
     return this.request({ ...config, method: 'DELETE' }, options);
   }
 
+  /**
+   * request 请求
+   * @param config axios 请求配置
+   * @param options 可选配置项
+   */
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    // 深拷贝请求配置，避免修改原始配置影响外部
     let conf: CreateAxiosOptions = cloneDeep(config);
+
     // cancelToken 如果被深拷贝，会导致最外层无法使用cancel方法来取消请求
+    // config.cancelToken 被浅拷贝
     if (config.cancelToken) {
       conf.cancelToken = config.cancelToken;
     }

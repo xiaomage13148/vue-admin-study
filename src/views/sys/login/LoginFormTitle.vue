@@ -20,6 +20,7 @@
       [LoginStateEnum.MOBILE]: t('sys.login.mobileSignInFormTitle'),
       [LoginStateEnum.QR_CODE]: t('sys.login.qrSignInFormTitle'),
     };
+    // unref: 如果参数是ref，则返回内部值，否则返回参数本身。 这是 val = isRef(val) ? val.value : val 计算的一个语法糖。
     return titleObj[unref(getLoginState)];
   });
 </script>

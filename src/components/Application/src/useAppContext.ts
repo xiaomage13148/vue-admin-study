@@ -6,6 +6,8 @@ export interface AppProviderContextProps {
   isMobile: Ref<boolean>;
 }
 
+// InjectionKey 注入键 用于在组件中访问应用程序上下文
+// Symbol() 创建唯一的Symbol值
 const key: InjectionKey<AppProviderContextProps> = Symbol();
 
 export function createAppProviderContext(context: AppProviderContextProps) {
