@@ -1,21 +1,21 @@
-import type {UserInfo} from '/#/store';
-import type {ErrorMessageMode} from '/#/axios';
-import {defineStore} from 'pinia';
-import {store} from '/@/store';
-import {RoleEnum} from '/@/enums/roleEnum';
-import {PageEnum} from '/@/enums/pageEnum';
-import {ROLES_KEY, TOKEN_KEY, USER_INFO_KEY} from '/@/enums/cacheEnum';
-import {getAuthCache, setAuthCache} from '/@/utils/auth';
-import {GetUserInfoModel, LoginParams} from '/@/api/sys/model/userModel';
-import {doLogout, getUserInfo, loginApi} from '/@/api/sys/user';
-import {useI18n} from '/@/hooks/web/useI18n';
-import {useMessage} from '/@/hooks/web/useMessage';
-import {router} from '/@/router';
-import {usePermissionStore} from '/@/store/modules/permission';
-import {RouteRecordRaw} from 'vue-router';
-import {PAGE_NOT_FOUND_ROUTE} from '/@/router/routes/basic';
-import {isArray} from '/@/utils/is';
-import {h} from 'vue';
+import type { UserInfo } from '/#/store';
+import type { ErrorMessageMode } from '/#/axios';
+import { defineStore } from 'pinia';
+import { store } from '/@/store';
+import { RoleEnum } from '/@/enums/roleEnum';
+import { PageEnum } from '/@/enums/pageEnum';
+import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import { getAuthCache, setAuthCache } from '/@/utils/auth';
+import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
+import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+import { useI18n } from '/@/hooks/web/useI18n';
+import { useMessage } from '/@/hooks/web/useMessage';
+import { router } from '/@/router';
+import { usePermissionStore } from '/@/store/modules/permission';
+import { RouteRecordRaw } from 'vue-router';
+import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
+import { isArray } from '/@/utils/is';
+import { h } from 'vue';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -34,7 +34,7 @@ export const useUserStore = defineStore({
     token: undefined,
     // roleList
     roleList: [],
-    // Whether the login expired
+    // 登录是否过期
     sessionTimeout: false,
     // Last fetch time
     lastUpdateTime: 0,
@@ -50,6 +50,7 @@ export const useUserStore = defineStore({
       return state.roleList.length > 0 ? state.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
     getSessionTimeout(state): boolean {
+      // !!：这是 JavaScript 的类型转换操作符，将一个值转换为布尔值。使用两个 !! 可以将任何值转换为其对应的布尔值
       return !!state.sessionTimeout;
     },
     getLastUpdateTime(state): number {
@@ -79,6 +80,7 @@ export const useUserStore = defineStore({
       this.roleList = [];
       this.sessionTimeout = false;
     },
+
     /**
      * 异步登录
      * @description: login
@@ -92,43 +94,62 @@ export const useUserStore = defineStore({
     ): Promise<GetUserInfoModel | null> {
       try {
         // 解构 params 对象，提取 goHome 和 mode 参数，剩下的参数都放在 loginParams 中
-        const {goHome = true, mode, ...loginParams} = params;
+        const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
-        const {token} = data;
+        const { token } = data;
 
-        // save token
+        // 设置token
         this.setToken(token);
+        // 在登录之后
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
       }
     },
+    /**
+     * 在登录之后
+     * @param goHome 是否前往首页
+     */
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // get user info
       const userInfo = await this.getUserInfoAction();
 
+      // 判定登录是否过期
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
+        // TODO 用户登录判定过期可能存在问题
         this.setSessionTimeout(false);
       } else {
+        // 没有过期
         const permissionStore = usePermissionStore();
         if (!permissionStore.isDynamicAddedRoute) {
+          // 路由不是动态添加
+          // 构建路由
           const routes = await permissionStore.buildRoutesAction();
           routes.forEach((route) => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });
+          // 添加页面错误路由
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
+
+          // 改变成路由是动态添加
           permissionStore.setDynamicAddedRoute(true);
         }
+        // goHome 为 true 并且 userInfo 存在且具有 homePath 属性，就会取 homePath 的值，否则取基础首页路径
+        // userInfo?.homePath：这里使用了可选链式调用 (?.)，如果 userInfo 存在并且具有 homePath 属性，就会取 homePath 的值
         goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
       }
       return userInfo;
     },
+
+    /**
+     * 获取用户信息
+     */
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
-      const {roles = []} = userInfo;
+      const { roles = [] } = userInfo;
       if (isArray(roles)) {
         const roleList = roles.map((item) => item.value) as RoleEnum[];
         this.setRoleList(roleList);
@@ -160,8 +181,8 @@ export const useUserStore = defineStore({
      * @description: Confirm before logging out
      */
     confirmLoginOut() {
-      const {createConfirm} = useMessage();
-      const {t} = useI18n();
+      const { createConfirm } = useMessage();
+      const { t } = useI18n();
       createConfirm({
         iconType: 'warning',
         title: () => h('span', t('sys.app.logoutTip')),

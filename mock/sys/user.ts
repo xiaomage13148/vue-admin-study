@@ -55,7 +55,7 @@ export default [
         (item) => item.username === username && password === item.password,
       );
       if (!checkUser) {
-        return resultError('Incorrect account or password！');
+        return resultError('账号或者密码错误!');
       }
       const { userId, username: _username, token, realName, desc, roles } = checkUser;
       return resultSuccess({
