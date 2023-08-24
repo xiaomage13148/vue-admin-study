@@ -12,7 +12,7 @@ export const growCardList: GrowCardItem[] = [
     title: '访问数',
     icon: 'visit-count|svg',
     value: 2000,
-    total: 120000,
+    total: 300000,
     color: 'green',
     action: '月',
   },

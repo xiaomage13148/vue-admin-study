@@ -1,12 +1,10 @@
 <template>
-  <div ref="chartRef" :style="{ height, width }"></div>
+  <div ref="chartRef" :style="{ height, width }" @click="selectCurrent"></div>
 </template>
-<script lang="ts">
-  import { basicProps } from './props';
-</script>
 <script lang="ts" setup>
-  import { onMounted, ref, Ref } from 'vue';
+  import { defineProps, onMounted, ref, Ref } from 'vue';
   import { useECharts } from '/@/hooks/web/useECharts';
+  import { basicProps } from '@/views/dashboard/analysis/components/props';
 
   defineProps({
     ...basicProps,

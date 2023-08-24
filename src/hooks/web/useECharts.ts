@@ -57,24 +57,37 @@ export function useECharts(
     }
   }
 
+  /**
+   * 设置图表配置项
+   * @param options 图表配置项
+   * @param clear 在设置选项前清除图表
+   */
   function setOptions(options: EChartsOption, clear = true) {
     cacheOptions.value = options;
     return new Promise((resolve) => {
+      // 如果图表没有正确渲染
       if (unref(elRef)?.offsetHeight === 0) {
+        // 30ms后递归执行
         useTimeoutFn(() => {
           setOptions(unref(getOptions));
           resolve(null);
         }, 30);
       }
+      // 下一个dom更新周期执行
       nextTick(() => {
         useTimeoutFn(() => {
+          // 双重校验 图表实例不存在
           if (!chartInstance) {
+            // 执行默认初始化图表
             initCharts(getDarkMode.value as 'default');
-
+            // 图表实例依然不存在 , 直接返回
             if (!chartInstance) return;
           }
+
+          // if clear --> true 则 清空图表实例
           clear && chartInstance?.clear();
 
+          // 传入配置项
           chartInstance?.setOption(unref(getOptions));
           resolve(null);
         }, 30);

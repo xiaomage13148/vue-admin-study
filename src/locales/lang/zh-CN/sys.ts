@@ -68,7 +68,7 @@ export default {
     forgetFormTitle: '重置密码',
 
     signInTitle: '后台管理系统',
-    signInDesc: '联系邮箱: 15234829838@163.com',
+    signInDesc: "联系邮箱: 15234829838{'@'}163.com",
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 

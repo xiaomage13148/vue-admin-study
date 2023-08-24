@@ -26,11 +26,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { CountTo } from '/@/components/CountTo/index';
+  // 导入的组件自动注册
+  import { CountTo } from '@/components/CountTo';
   import Icon from '@/components/Icon/Icon.vue';
   import { Tag, Card } from 'ant-design-vue';
   import { growCardList } from '../data';
+  import { defineProps } from 'vue';
 
+  // 父子组件传值
+  // 只读操作
   defineProps({
     loading: {
       type: Boolean,
