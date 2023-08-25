@@ -12,6 +12,7 @@ export const EXCEPTION_COMPONENT = () => import('/@/views/sys/exception/Exceptio
 export const LAYOUT = () => import('/@/layouts/default/index.vue');
 
 /**
+ * 获取父级布局的配置 , 没有传递参数，返回默认的父级布局
  * @description: parent-layout
  */
 export const getParentLayout = (_name?: string) => {

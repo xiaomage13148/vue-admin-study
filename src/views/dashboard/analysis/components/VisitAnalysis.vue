@@ -2,10 +2,11 @@
   <div ref="chartRef" :style="{ height, width }" @click="selectCurrent"></div>
 </template>
 <script lang="ts" setup>
-  import { defineProps, onMounted, ref, Ref } from 'vue';
+  import { onMounted, ref, Ref } from 'vue';
   import { useECharts } from '/@/hooks/web/useECharts';
   import { basicProps } from '@/views/dashboard/analysis/components/props';
 
+  // defineProps 编译宏 不需要导入
   defineProps({
     ...basicProps,
   });
@@ -27,6 +28,7 @@
         type: 'category',
         boundaryGap: false,
         data: [...new Array(18)].map((_item, index) => `${index + 6}:00`),
+        // x轴的分割线
         splitLine: {
           show: true,
           lineStyle: {
@@ -35,6 +37,8 @@
             color: 'rgba(226,226,226,0.5)',
           },
         },
+
+        // 显示坐标轴刻度
         axisTick: {
           show: false,
         },
@@ -42,8 +46,8 @@
       yAxis: [
         {
           type: 'value',
-          max: 80000,
-          splitNumber: 4,
+          max: 100000,
+          splitNumber: 10,
           axisTick: {
             show: false,
           },
@@ -55,7 +59,7 @@
           },
         },
       ],
-      grid: { left: '1%', right: '1%', top: '2  %', bottom: 0, containLabel: true },
+      grid: { left: '1%', right: '1%', top: '2%', bottom: 0, containLabel: true },
       series: [
         {
           smooth: true,
@@ -83,5 +87,14 @@
         },
       ],
     });
+
+    // const instance = getInstance();
+    // // TODO ---->打印instance , 日期: 2023/8/25
+    // console.log(`---->打印instance , 当前时间是: ${new Date().toString()}` , instance);
+
+    // instance.on('click' , params => {
+    //   // TODO ---->打印params , 日期: 2023/8/25
+    //   console.log(`---->打印params , 当前时间是: ${new Date().toString()}` , params);
+    // })
   });
 </script>

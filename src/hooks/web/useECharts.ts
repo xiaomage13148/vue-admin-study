@@ -55,6 +55,11 @@ export function useECharts(
         resizeFn();
       }, 30);
     }
+
+    // TODO echarts 绑定事件不生效
+    // chartInstance.on('click' , params => {
+    //   console.log('---->打印params' , params);
+    // })
   }
 
   /**
